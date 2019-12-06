@@ -1,0 +1,257 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>BEM presentation</title>
+
+		<link rel="stylesheet" href="css/reset.css">
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/black.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/monokai.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+			var link = document.createElement( 'link' );
+			link.rel = 'stylesheet';
+			link.type = 'text/css';
+			link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+			document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section data-background="assets/1_xHJeNZlLtdFkjMMIL1z4Ag.jpeg" data-background-repeat="repeat" data-background-size="500px">
+					<div style="background-color: rgba(0, 0, 0, 0.9); color: #fff; padding: 20px;">
+						<h1>BEM</h1>
+						<h4>Methodology that helps you to create reusable and extendable components</h4>
+					</div>
+				</section>
+				<section>
+					<section>
+						<h1>What is BEM?</h1>
+					</section>
+					<section>
+						<p>BEM claims that simple semantic model </br> (<span style="display: inline-block;" class="fragment fade-left">Block</span> <span style="display: inline-block;" class="fragment fade-left">Element</span>, and <span style="display: inline-block;" class="fragment fade-left">Modifier</span>) </br> is enough to define the way you:</p>
+						<p class="fragment">1) Author HTML/CSS/JavaScript</p>
+						<p class="fragment">2) Structure code and components</p>
+						<p class="fragment">3) Set up interaction</p>
+						<p class="fragment">4) Scale your project</p>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Block</h1>
+					</section>
+					<section>
+						<ul>
+							<li>Block is a functionally independent page component that can be reused. In HTML, blocks are represented by the class attribute.</li>
+							<li class="fragment">The block name describes its purpose ("What is it?" — menu or button), not its state ("What does it look like?" — red or big).</li>
+						</ul>
+						<pre class="fragment"><code class="hljs" data-trim data-line-numbers="1-5">
+							<!-- Correct. The `error` block is semantically meaningful -->
+							<div class="error"></div>
+
+							<!-- Incorrect. It describes the appearance -->
+							<div class="red-text"></div>
+							</code></pre>
+					</section>
+					<section>
+						<h2>Nesting</h2>
+						<ul>
+							<li>Blocks can be nested in each other.</li>
+							<li>You can have any number of nesting levels.</li>
+						</ul>
+						<pre class="fragment"><code class="hljs" data-trim data-line-numbers="1-8">
+							<!-- `header` block -->
+							<header class="header">
+								<!-- Nested `logo` block -->
+								<div class="logo"></div>
+
+								<!-- Nested `search-form` block -->
+								<form class="search-form"></form>
+							</header>
+							</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Element</h1>
+					</section>
+					<section>
+						<h2>Element is a composite part of a block that can't be used separately from it.</h2>
+						<ul style="font-size: 30px;">
+							<li>The element name describes its purpose ("What is this?" — item, text, etc.), not its state ("What type, or what does it look like?" — red, big, etc.).</li>
+							<li>The structure of an element's full name is block-name__element-name. The element name is separated from the block name with a double underscore (__).</li>
+						</ul>
+					</section>
+					<section>
+						<h3>Example:</h3>
+						<pre><code class="hljs" data-trim data-line-numbers="1-8">
+							<!-- `search-form` block -->
+							<form class="search-form">
+								<!-- `input` element in the `search-form` block -->
+								<input class="search-form__input">
+
+								<!-- `button` element in the `search-form` block -->
+								<button class="search-form__button">Search</button>
+							</form>
+							</code></pre>
+					</section>
+					<section>
+						<h3>Nesting</h3>
+						<ul style="font-size: 35px;">
+							<li>Elements can be nested inside each other.</li>
+							<li>You can have any number of nesting levels.</li>
+							<li>An element is always part of a block, not another element. This means that element names can't define a hierarchy such as block__elem1__elem2.</li>
+						</ul>
+								</code></pre>
+					</section>
+					<section>
+						<h3>Example:</h3>
+						<pre><code class="hljs" data-trim data-line-numbers="1-25">
+							<!--
+								Correct. The structure of the full element name follows the pattern:
+								`block-name__element-name`
+							-->
+							<form class="search-form">
+									<div class="search-form__content">
+										<input class="search-form__input">
+								
+										<button class="search-form__button">Search</button>
+									</div>
+								</form>
+								
+								<!--
+									Incorrect. The structure of the full element name doesn't follow the pattern:
+									`block-name__element-name`
+								-->
+								<form class="search-form">
+									<div class="search-form__content">
+										<!-- Recommended: `search-form__input` or `search-form__content-input` -->
+										<input class="search-form__content__input">
+								
+										<!-- Recommended: `search-form__button` or `search-form__content-button` -->
+										<button class="search-form__content__button">Search</button>
+									</div>
+								</form>
+							</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h1>Modifier</h1>
+					</section>
+					<section>
+						<h3>Modifier is an entity that defines the appearance, state, or behavior of a block or element.</h3>
+						<ul style="font-size: 35px;">
+							<li>The modifier name describes its appearance ("What size?" or "Which theme?" and so on — size_s or theme_islands), its state ("How is it different from the others?" — disabled, focused, etc.) and its behavior ("How does it behave?" or "How does it respond to the user?" — such as directions_left-top).</li>
+							<li>The modifier name is separated from the block or element name by a single underscore (_).</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Boolean modifier</h2>
+						<ul style="font-size: 28px;">
+							<li>Used when only the presence or absence of the modifier is important, and its value is irrelevant. For example, disabled. If a Boolean modifier is present, its value is assumed to be true.</li>
+							<li>The structure of the modifier's full name follows the pattern: <ul>
+								<li>block-name_modifier-name</li>
+								<li>block-name__element-name_modifier-name</li>
+							</ul></li>
+						</ul>
+						<pre><code class="hljs" data-trim data-line-numbers="1-8">
+								<!-- `search-form` block -->
+								<form class="search-form">
+									<!-- `input` element in the `search-form` block -->
+									<input class="search-form__input">
+	
+									<!-- `button` element in the `search-form` block -->
+									<button class="search-form__button">Search</button>
+								</form>
+								</code></pre>
+					</section>
+					<section>
+						<h2>Key-value modifier</h2>
+						<ul style="font-size: 28px;">
+							<li>Used when the modifier value is important. For example, "a menu with the islands design theme": menu_theme_islands.</li>
+							<li>The structure of the modifier's full name follows the pattern: <ul>
+								<li>block-name_modifier-name_modifier-value</li>
+								<li>block-name__element-name_modifier-name_modifier-value</li>
+							</ul></li>
+						</ul>
+						<pre><code class="hljs" data-trim data-line-numbers="1-8">
+								<!-- The `search-form` block has the `theme` modifier with the value `islands` -->
+								<form class="search-form search-form_theme_islands">
+									<input class="search-form__input">
+									
+								<!-- The `button` element has the `size` modifier with the value `m` -->
+									<button class="search-form__button search-form__button_size_m">Search</button>
+								</form>
+								</code></pre>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>Should I create a block or an element?</h2>
+					</section>
+					<section>
+						<h3>If a section of code might be reused and it doesn't depend on other page components being implemented:</h3>
+						<h2>Create a block</h2>
+					</section>
+					<section>
+						<h3>If a section of code can't be used separately without the parent entity (the block):</h3>
+						<h2>Create an element</h2>
+					</section>
+				</section>
+				<section>
+					<section>
+						<h2>MIX</h2>
+					</section>
+					<section>
+						<h2>Mix is a technique for using different BEM entities on a single DOM node.</h2>
+						<h3>Mixes allow you to:</h3>
+						<ul>
+							<li>Combine the behavior and styles of multiple entities without duplicating code.</li>
+							<li>Create semantically new UI components based on existing ones.</li>
+						</ul>
+					</section>
+					<section>
+						<h2>Example:</h2>
+						<pre><code class="hljs" data-trim data-line-numbers="1-8">
+								<!-- `header` block -->
+								<div class="header">
+								<!--
+								The `search-form` block is mixed with the `search-form` element
+								from the `header` block
+								-->
+									<div class="search-form header__search-form"></div>
+								</div>
+								</code></pre>
+					</section>
+				</section>
+				<section>
+					<h1>Thank you for watching</h1>
+				</section>
+			</div>
+		</div>
+
+		<script src="js/reveal.js"></script>
+
+		<script>
+			// More info about config & dependencies:
+			// - https://github.com/hakimel/reveal.js#configuration
+			// - https://github.com/hakimel/reveal.js#dependencies
+			Reveal.initialize({
+				dependencies: [
+					{ src: 'plugin/markdown/marked.js' },
+					{ src: 'plugin/markdown/markdown.js' },
+					{ src: 'plugin/notes/notes.js', async: true },
+					{ src: 'plugin/highlight/highlight.js', async: true }
+				]
+			});
+		</script>
+	</body>
+</html>
